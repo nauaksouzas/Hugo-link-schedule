@@ -1,0 +1,8 @@
+{
+  "name": "Hugo Barber Custom Booking",
+  "description": "Premium custom barber booking experience for Hugo Barber with Google Calendar-ready scheduling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
