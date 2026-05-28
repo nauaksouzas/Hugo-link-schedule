@@ -35,7 +35,6 @@ export default function App() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [isSundayClosed, setIsSundayClosed] = useState(false);
-  const [isApiDemo, setIsApiDemo] = useState(false);
 
   // Notifications or Booking Outcomes
   const [errorMsg, setErrorMsg] = useState('');
@@ -91,7 +90,6 @@ export default function App() {
             throw new Error(data.error || "Failed to load live availability slots.");
           }
           setAvailableSlots(data.slots || []);
-          setIsApiDemo(!!data.isDemo);
           setIsSundayClosed(!!data.isClosed);
           // Reset time slot selection when parameters change
           setSelectedTimeSlot(null);
@@ -362,12 +360,6 @@ export default function App() {
                 {errorMsg && (
                   <div className="notice" style={{ borderColor: 'var(--danger)', background: 'rgba(255, 180, 168, 0.12)', color: 'var(--danger)' }}>
                     {errorMsg}
-                  </div>
-                )}
-
-                {isApiDemo && (
-                  <div className="notice" style={{ borderColor: '#e1ad46', background: 'rgba(225, 173, 70, 0.08)', color: '#f1cf83' }}>
-                    {lang === 'pt' ? '⚠️ Hugo não conectou sua conta Google neste ambiente ainda. Rodando em modo de Demonstração.' : '⚠️ Hugo has not connected Google Calendar yet. Running in Demo Simulation Mode.'}
                   </div>
                 )}
 
