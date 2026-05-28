@@ -61,7 +61,10 @@ async function getGoogleAccessToken(): Promise<string> {
 app.get("/api/google/auth/start", (req, res) => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const rawRedirectUri = process.env.GOOGLE_REDIRECT_URI;
-  const hostRedirectUri = `${req.protocol}://${req.get("host")}/api/google/oauth/callback`;
+  
+  const host = req.get("host") || "";
+  const protocol = host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https";
+  const hostRedirectUri = `${protocol}://${host}/api/google/oauth/callback`;
   const redirectUri = rawRedirectUri || hostRedirectUri;
 
   if (!clientId) {
@@ -86,7 +89,10 @@ app.get("/api/google/oauth/callback", async (req, res) => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   const rawRedirectUri = process.env.GOOGLE_REDIRECT_URI;
-  const hostRedirectUri = `${req.protocol}://${req.get("host")}/api/google/oauth/callback`;
+
+  const host = req.get("host") || "";
+  const protocol = host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https";
+  const hostRedirectUri = `${protocol}://${host}/api/google/oauth/callback`;
   const redirectUri = rawRedirectUri || hostRedirectUri;
 
   if (!code) {
