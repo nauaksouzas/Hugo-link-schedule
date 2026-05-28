@@ -6,6 +6,8 @@ import authStartHandler from "./api/google/auth/start";
 import authCallbackHandler from "./api/google/oauth/callback";
 import availabilityHandler from "./api/availability";
 import bookingsHandler from "./api/bookings";
+import healthHandler from "./api/health";
+import envCheckHandler from "./api/env-check";
 
 async function startServer() {
   const app = express();
@@ -19,11 +21,10 @@ async function startServer() {
   app.get("/api/google/oauth/callback", authCallbackHandler);
   app.get("/api/availability", availabilityHandler);
   app.post("/api/bookings", bookingsHandler);
+  app.get("/api/health", healthHandler);
+  app.get("/api/env-check", envCheckHandler);
 
-  // Fallback for health check
-  app.get("/api/health", (req, res) => {
-    res.json({ status: "ok" });
-  });
+  // Fallback for health check removed since handled above
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {

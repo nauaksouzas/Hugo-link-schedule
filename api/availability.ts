@@ -4,7 +4,7 @@ export default async function handler(req: any, res: any) {
   const { date, serviceId, washDry } = req.query;
 
   if (!isGoogleApiConfigured()) {
-    return res.status(400).json({ error: "Calendar is not connected yet. Please contact Hugo directly." });
+    return res.status(400).json({ ok: false, error: "Calendar is not connected yet. Please contact Hugo directly." });
   }
 
   if (!date || typeof date !== "string") {
@@ -71,6 +71,6 @@ export default async function handler(req: any, res: any) {
     res.json({ slots: validSlots, isClosed: false });
   } catch (err: any) {
     console.error("Availability query error:", err);
-    res.status(500).json({ error: "Calendar is not connected yet. Please contact Hugo directly." });
+    res.status(500).json({ ok: false, error: "Calendar is not connected yet. Please contact Hugo directly." });
   }
 }

@@ -83,7 +83,13 @@ export default function App() {
       setErrorMsg('');
       try {
         const res = await fetch(`/api/availability?date=${selectedDate}&serviceId=${selectedServiceId}&washDry=${washDry}`);
-        const data = await res.json();
+        let data;
+        const text = await res.text();
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error(`Server returned an invalid response (Status ${res.status}): ${text.substring(0, 100)}...`);
+        }
         
         if (active) {
           if (!res.ok) {
@@ -166,7 +172,14 @@ export default function App() {
         })
       });
 
-      const data = await res.json();
+      let data;
+      const text = await res.text();
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        throw new Error(`Server returned an invalid response (Status ${res.status}): ${text.substring(0, 100)}...`);
+      }
+
       if (!res.ok) {
         throw new Error(data.error || 'Failed to submit booking.');
       }

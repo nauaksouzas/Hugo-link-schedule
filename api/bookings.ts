@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!isGoogleApiConfigured()) {
-    return res.status(400).json({ error: "Calendar is not connected yet. Please contact Hugo directly." });
+    return res.status(400).json({ ok: false, error: "Calendar is not connected yet. Please contact Hugo directly." });
   }
 
   const { serviceId, washDry, date, time, name, phone, email, language, notes } = req.body || {};
@@ -95,6 +95,6 @@ export default async function handler(req: any, res: any) {
     res.json({ success: true, message: "Appointment confirmed!" });
   } catch (err: any) {
     console.error("Booking Error:", err);
-    res.status(500).json({ error: "We couldn’t add this appointment to Hugo’s calendar. Please contact Hugo directly." });
+    res.status(500).json({ ok: false, error: "We couldn’t add this appointment to Hugo’s calendar. Please contact Hugo directly." });
   }
 }
