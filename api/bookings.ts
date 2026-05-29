@@ -9,18 +9,23 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ ok: false, error: "Calendar is not connected yet. Please contact Hugo directly." });
   }
 
-  const { serviceId, washDry, date, time, name, phone, email, language, notes } = req.body || {};
+  const { serviceIds, washDry, date, time, name, phone, email, language, notes } = req.body || {};
 
-  if (!serviceId || !date || !time || !name || !phone) {
-    return res.status(400).json({ error: "Missing required fields: serviceId, date, time, name and phone are mandatory." });
+  if (!serviceIds || !Array.isArray(serviceIds) || serviceIds.length === 0 || !date || !time || !name || !phone) {
+    return res.status(400).json({ error: "Missing required fields: serviceIds, date, time, name and phone are mandatory." });
   }
 
-  const service = SERVICES.find(s => s.id === serviceId);
-  if (!service) {
+  const selectedServices = SERVICES.filter(s => serviceIds.includes(s.id));
+  if (selectedServices.length === 0) {
     return res.status(400).json({ error: "Selected service is invalid." });
   }
 
-  const totalDuration = service.duration + (washDry ? 10 : 0);
+  const baseDuration = selectedServices.reduce((acc, s) => acc + s.duration, 0);
+  const totalDuration = baseDuration + (washDry ? 10 : 0);
+  const totalPrice = selectedServices.reduce((acc, s) => acc + s.price, 0);
+  const serviceNamesEn = selectedServices.map(s => s.en).join(", ");
+  const serviceNamesPt = selectedServices.map(s => s.pt).join(", ");
+
   const selectedStart = new Date(`${date}T${time}:00`);
   const selectedEnd = new Date(selectedStart.getTime() + totalDuration * 60 * 1000);
 
@@ -52,11 +57,11 @@ export default async function handler(req: any, res: any) {
       `Phone: ${phone}`,
       email ? `Email: ${email}` : null,
       `Preferred language: ${language || 'English'}`,
-      `Service: ${service.en} / ${service.pt}`,
-      `Base duration: ${service.duration} min`,
+      `Service: ${serviceNamesEn} / ${serviceNamesPt}`,
+      `Base duration: ${baseDuration} min`,
       `Wash & Dry: ${washDry ? 'Yes (+10 mins)' : 'No'}`,
       `Total duration: ${totalDuration} min`,
-      `Estimated price: $${service.price}`,
+      `Estimated price: $${totalPrice}`,
       `Payment: In person`,
       notes ? `\nNotes: ${notes}` : null
     ].filter(Boolean).join("\n");
@@ -71,7 +76,7 @@ export default async function handler(req: any, res: any) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        summary: `Hugo Barber - ${service.en} - ${name}`,
+        summary: `Hugo Barber - ${serviceNamesEn} - ${name}`,
         location: "Goat Barbershop, 39 South Street, Framingham, MA",
         description: eventDesc,
         start: {

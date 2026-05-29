@@ -1,7 +1,7 @@
 import { SERVICES, getBusyIntervals, isGoogleApiConfigured } from "./_lib/utils.js";
 
 export default async function handler(req: any, res: any) {
-  const { date, serviceId, washDry } = req.query;
+  const { date, serviceIds, washDry } = req.query;
 
   if (!isGoogleApiConfigured()) {
     return res.status(400).json({ ok: false, error: "Calendar is not connected yet. Please contact Hugo directly." });
@@ -11,12 +11,18 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ error: "Missing 'date' parameter (YYYY-MM-DD)" });
   }
 
-  const service = SERVICES.find(s => s.id === serviceId);
-  if (!service) {
-    return res.status(400).json({ error: "Invalid or missing serviceId" });
+  if (!serviceIds || typeof serviceIds !== "string") {
+    return res.status(400).json({ error: "Missing 'serviceIds' parameter" });
   }
 
-  const totalDuration = service.duration + (washDry === "true" ? 10 : 0);
+  const ids = serviceIds.split(',');
+  const selectedServices = SERVICES.filter(s => ids.includes(s.id));
+  if (selectedServices.length === 0) {
+    return res.status(400).json({ error: "Invalid serviceIds" });
+  }
+
+  const baseDuration = selectedServices.reduce((acc, s) => acc + s.duration, 0);
+  const totalDuration = baseDuration + (washDry === "true" ? 10 : 0);
 
   try {
     const dayOfWeek = new Date(date + "T12:00:00").getDay();
