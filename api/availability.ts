@@ -1,4 +1,4 @@
-import { SERVICES, getBusyIntervals, isGoogleApiConfigured } from "../src/backend/utils";
+import { SERVICES, getBusyIntervals, isGoogleApiConfigured } from "./_lib/utils.js";
 
 export default async function handler(req: any, res: any) {
   const { date, serviceId, washDry } = req.query;

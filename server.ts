@@ -2,12 +2,12 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 
-import authStartHandler from "./api/google/auth/start";
-import authCallbackHandler from "./api/google/oauth/callback";
-import availabilityHandler from "./api/availability";
-import bookingsHandler from "./api/bookings";
-import healthHandler from "./api/health";
-import envCheckHandler from "./api/env-check";
+import authStartHandler from "./api/google/auth/start.js";
+import authCallbackHandler from "./api/google/oauth/callback.js";
+import availabilityHandler from "./api/availability.js";
+import bookingsHandler from "./api/bookings.js";
+import healthHandler from "./api/health.js";
+import envCheckHandler from "./api/env-check.js";
 
 async function startServer() {
   const app = express();

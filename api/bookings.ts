@@ -1,4 +1,4 @@
-import { SERVICES, getBusyIntervals, getGoogleAccessToken, isGoogleApiConfigured } from "../src/backend/utils";
+import { SERVICES, getBusyIntervals, getGoogleAccessToken, isGoogleApiConfigured } from "./_lib/utils.js";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {

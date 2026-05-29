@@ -1,4 +1,4 @@
-import { getRedirectUri } from "../../../src/backend/utils";
+import { getRedirectUri } from "../../_lib/utils.js";
 import dotenv from "dotenv";
 dotenv.config();
 
