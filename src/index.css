@@ -45,7 +45,6 @@ header {
 }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 0; }
 .brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
-.brand img { width: 48px; height: 48px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(201,154,60,.15)); }
 .brand strong { font-family: Georgia, "Times New Roman", serif; color: var(--gold-2); letter-spacing: .09em; text-transform: uppercase; font-size: 18px; white-space: nowrap; }
 .navlinks { display: flex; align-items: center; gap: 20px; color: var(--muted); font-size: 14px; }
 .navlinks a:hover { color: var(--gold-2); }
@@ -126,7 +125,6 @@ h3 { margin: 0; color: var(--cream); letter-spacing: -.02em; }
   letter-spacing: -.12em;
 }
 .logo-lockup { display: flex; align-items: center; gap: 16px; position: relative; z-index: 1; }
-.logo-lockup img { width: 88px; height: 88px; object-fit: contain; }
 .appointment-preview { margin-top: 34px; position: relative; z-index: 1; display: grid; gap: 14px; }
 .preview-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 16px; border: 1px solid rgba(201,154,60,.22); background: rgba(5,5,5,.34); border-radius: 18px; }
 .preview-row small { color: var(--muted); display: block; }
@@ -242,7 +240,6 @@ footer { padding: 32px 0; color: var(--muted); border-top: 1px solid var(--line)
   .hero { padding-top: 54px; }
   .nav { gap: 10px; }
   .brand strong { font-size: 14px; }
-  .brand img { width: 40px; height: 40px; }
   .nav-actions .btn { display: none; }
   .service-list, .field-row { grid-template-columns: 1fr; }
   .modal-backdrop { padding: 12px; }

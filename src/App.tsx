@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Language, CONFIG, t, money } from './config';
+import { HugoBarberLogo } from './components/HugoBarberLogo';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
@@ -206,7 +207,7 @@ export default function App() {
       <header>
         <div className="wrap nav">
           <a className="brand" href="#top" aria-label="Hugo Barber home">
-            <img src="/assets/logo.png" alt="Hugo Barber logo" />
+            <HugoBarberLogo size="sm" />
             <strong>Hugo Barber</strong>
           </a>
           <nav className="navlinks" aria-label="Main navigation">
@@ -253,7 +254,7 @@ export default function App() {
 
             <aside className="barber-card" id="booking">
               <div className="logo-lockup">
-                <img src="/assets/logo.png" alt="Hugo Barber logo" />
+                <HugoBarberLogo size="md" />
                 <div>
                   <div className="kicker">{t('card.kicker', lang)}</div>
                   <h2>{t('card.title', lang)}</h2>
